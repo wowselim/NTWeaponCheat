@@ -1,6 +1,8 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,10 +12,13 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+
+import util.Modifier;
 
 public class Ui extends JFrame {
 	String[] weapons;
@@ -22,6 +27,7 @@ public class Ui extends JFrame {
 	private JButton apply;
 	
 	public Ui() {
+		super("Nuclear Throne Weapon Modifier");
 		setSize(480, 240);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -50,6 +56,19 @@ public class Ui extends JFrame {
 		apply = new JButton("Set this weapon for all characters");
 		add(listScroller, BorderLayout.WEST);
 		add(apply, BorderLayout.CENTER);
+		initActionListeners();
+	}
+	
+	private void initActionListeners() {
+		apply.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(list.getSelectedIndex() == -1)
+					return;
+				System.out.println(list.getSelectedIndex());
+				String msg = Modifier.setWeapon(list.getSelectedIndex());
+				JOptionPane.showMessageDialog(Ui.this, msg);
+			}
+		});
 	}
 	
 	public static void main(String[] args) {

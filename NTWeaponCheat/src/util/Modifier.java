@@ -1,4 +1,4 @@
-package boot;
+package util;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Boot {
-	public static void main(String[] args) {
+public class Modifier {
+	public static String setWeapon(int weaponID) {
 		boolean error = false;
 		String appdata = System.getProperty("user.home");
 		appdata += "\\AppData\\Local\\nuclearthrone";
@@ -45,7 +45,7 @@ public class Boot {
 		boolean found = false;
 		for (int i = 0; i < lines.size(); i++) {
 			if (found && toggle) {
-				lines.set(i, "17");
+				lines.set(i, String.valueOf(weaponID));
 			}
 
 			if (found)
@@ -67,9 +67,10 @@ public class Boot {
 			error = true;
 		}
 
-		if (!error) {
-			System.out.println("Version file has been successfully modified.");
-		}
+		if (!error)
+			return "Version file has been successfully modified.";
+		else
+			return "Something's wrong. Check console output.";
 
 	}
 }
