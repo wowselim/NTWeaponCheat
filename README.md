@@ -5,6 +5,5 @@ A small cheat tool for Nuclear Throne that will help you to quickly change the i
 
 TODO:
 =====
-- Add weapon list
-- Implement UI
+- Add missing weapons to weapon list
 - Fix compatibility with GNU/Linux and OS X
