@@ -9,6 +9,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -21,7 +24,7 @@ import javax.swing.UIManager;
 import util.Modifier;
 
 public class Ui extends JFrame {
-	String[] weapons;
+	private List<String> weapons;
 	private JList list;
 	private JScrollPane listScroller;
 	private JButton apply;
@@ -30,6 +33,7 @@ public class Ui extends JFrame {
 		super("Nuclear Throne Weapon Modifier");
 		setSize(480, 240);
 		setLocationRelativeTo(null);
+		this.setIconImage(new ImageIcon("res\\icon.png").getImage());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		setLayout(new BorderLayout());
@@ -39,19 +43,20 @@ public class Ui extends JFrame {
 	
 	private void loadList() {
 		Path listPath = Paths.get("res\\weapons.list");
-		List<String> lines = null;
 		try {
-			lines = Files.readAllLines(listPath);
+			weapons = Files.readAllLines(listPath);
 		} catch (IOException e) {
 			System.out.println("Error reading weapon list.");
-		}
-		weapons = new String[lines.size()];
-		weapons = lines.toArray(weapons);		
+		}	
 	}
 	
 	private void init() {
-		list = new JList<String>(weapons);
+		DefaultListModel<String> model = new DefaultListModel<String>();
+		for(String weapon : weapons)
+			model.addElement(weapon);
+		list = new JList<String>(model);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
 		listScroller = new JScrollPane(list);
 		apply = new JButton("Set this weapon for all characters");
 		add(listScroller, BorderLayout.WEST);
