@@ -1,5 +1,7 @@
 package util;
 
+import globals.Globals;
+
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -12,8 +14,7 @@ import java.util.List;
 public class Modifier {
 	public static String setWeapon(int weaponID) {
 		boolean error = false;
-		String appdata = System.getProperty("user.home");
-		appdata += "\\AppData\\Local\\nuclearthrone";
+		String appdata = Globals.getDirectory();
 
 		List<String> fileNames = new ArrayList<>();
 		try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(Paths
@@ -32,6 +33,7 @@ public class Modifier {
 		Collections.sort(fileNames);
 		final Path versionFile = Paths.get(fileNames.get(fileNames.size() - 1));
 		System.out.println("Path of file: " + versionFile.toString());
+		System.out.println("Setting weapon IDs to " + weaponID + ".");
 		List<String> lines = null;
 
 		try {
